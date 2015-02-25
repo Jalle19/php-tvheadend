@@ -1,0 +1,22 @@
+{
+    "name": "jalle19/php-tvheadend",
+    "description": "Library for communicating with tvheadend",
+    "license": "GNU GPL v2.0",
+    "version": "0.1",
+    "authors": [
+        {
+            "name": "Sam Stenvall",
+            "email": "neggelandia@gmail.com"
+        }
+    ],
+    "require": {
+        "zendframework/zend-http": "2.3.*",
+        "nategood/commando": "0.2.*",
+        "monolog/monolog": "1.12.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "jalle19\\tvheadend": "src"
+        }
+    }
+}
