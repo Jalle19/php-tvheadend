@@ -43,8 +43,10 @@ class TvheadendCommand
 	/**
 	 * Base constructor. Subclasses should call this first so the arguments 
 	 * required for tvheadend communication can be set
+	 * @param string $prefix prefix for the basic options, e.g. "source" 
+	 * changes the option "tvheadend-hostname" to "source-tvheadend-hostname"
 	 */
-	public function __construct()
+	public function __construct($prefix = '')
 	{
 		// Configure the logger
 		$dateFormat = 'Y-m-d H:i:s';
@@ -57,21 +59,24 @@ class TvheadendCommand
 		$this->logger->pushHandler($handler);
 
 		$command = new \Commando\Command();
+		
+		if (!empty($prefix))
+			$prefix .= '-';
 
 		// Required arguments
-		$command->option('tvheadend-hostname')
+		$command->option($prefix.'tvheadend-hostname')
 				->require()
 				->describeAs('The hostname where tvheadend is running');
 
 		// Optional arguments
-		$command->option('tvheadend-http-port')
+		$command->option($prefix.'tvheadend-http-port')
 				->default(9981)
 				->describeAs('The tvheadend HTTP port');
 
-		$command->option('tvheadend-username')
+		$command->option($prefix.'tvheadend-username')
 				->describeAs('The tvheadend username');
 
-		$command->option('tvheadend-password')
+		$command->option($prefix.'tvheadend-password')
 				->describeAs('The tvheadend password');
 
 		$this->command = $command;
