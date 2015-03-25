@@ -42,6 +42,16 @@ class BasicHttpClient implements ClientInterface
 	 * @var int
 	 */
 	private $_port;
+	
+	/**
+	 * @var string
+	 */
+	private $_username;
+	
+	/**
+	 * @var string
+	 */
+	private $_password;
 
 	/**
 	 * Class constructor
@@ -57,6 +67,10 @@ class BasicHttpClient implements ClientInterface
 
 	public function setCredentials($username, $password)
 	{
+		$this->_username = $username;
+		$this->_password = $password;
+		
+		// Pass along to the client
 		$this->_httpClient->setAuth($username, $password);
 	}
 
