@@ -74,21 +74,6 @@ class BasicHttpClient implements ClientInterface
 		$this->_httpClient->setAuth($username, $password);
 	}
 
-	public function createRequest($path, array $requestParameters = array())
-	{
-		$request = $this->createBaseRequest($this->normalizePath($path));
-		$request->setMethod(\Zend\Http\Request::METHOD_POST);
-		$request->getHeaders()->addHeaders(array(
-			'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8'));
-
-		$this->addDefaultParameters($request);
-
-		foreach ($requestParameters as $name=> $value)
-			$request->getPost()->set($name, $value);
-
-		return $request;
-	}
-
 	public function getResponse($request)
 	{
 		$httpRequest = $this->createBaseRequest($request->getPath());

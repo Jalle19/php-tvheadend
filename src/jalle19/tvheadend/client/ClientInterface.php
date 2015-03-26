@@ -34,14 +34,6 @@ interface ClientInterface
 	public function setCredentials($username, $password);
 
 	/**
-	 * Creates a request to the specified API path with the specified parameters
-	 * @param string $path the API path
-	 * @param array $requestParameters
-	 * @return Request
-	 */
-	public function createRequest($path, array $requestParameters = array());
-
-	/**
 	 * Executes the specified request and returns the response
 	 * @param Request $request
 	 * @return \jalle19\tvheadend\client\Response
