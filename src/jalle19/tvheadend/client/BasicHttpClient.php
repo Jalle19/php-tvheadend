@@ -127,7 +127,11 @@ class BasicHttpClient implements ClientInterface
 	 */
 	protected function addDefaultParameters(&$request)
 	{
-		$defaultParameters = array('dir'=>'ASC');
+		$defaultParameters = array(
+			'all'=>1,
+			'dir'=>'ASC',
+			'start'=>0,
+			'limit'=>999999999);
 
 		foreach ($defaultParameters as $name=> $value)
 			$request->getPost()->set($name, $value);
