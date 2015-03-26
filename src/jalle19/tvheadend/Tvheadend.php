@@ -172,6 +172,15 @@ class Tvheadend
 
 		return $channels;
 	}
+	
+	/**
+	 * @param \jalle19\tvheadend\IStreamable $streamable a streamable
+	 * @return string the absolute URL to the streamable
+	 */
+	public function getAbsoluteUrl(model\IStreamable $streamable)
+	{
+		return $this->_client->getBaseUrl().$streamable->getUrl();
+	}
 
 	/**
 	 * @return client\ClientInterface the client

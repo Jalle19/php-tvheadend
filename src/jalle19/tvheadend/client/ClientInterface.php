@@ -40,4 +40,13 @@ interface ClientInterface
 	 * @throws exception\RequestFailedException
 	 */
 	public function getResponse($request);
+	
+	/**
+	 * Returns the base URL to the instance it is connected to, e.g. 
+	 * http://localhost:9981
+	 * @param boolean $includeCredentials whether to include eventual 
+	 * credentials in the URL. Defaults to true.
+	 * @return string the URL
+	 */
+	public function getBaseUrl($includeCredentials = true);
 }

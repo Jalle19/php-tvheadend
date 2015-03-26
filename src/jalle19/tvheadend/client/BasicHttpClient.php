@@ -96,8 +96,9 @@ class BasicHttpClient implements ClientInterface
 	 */
 	protected function createBaseRequest($relativeUrl)
 	{
+		$baseUrl = $this->getBaseUrl(false).'/api';
 		$request = new \Zend\Http\Request();
-		$request->setUri($this->getBaseUrl().$relativeUrl);
+		$request->setUri($baseUrl.$relativeUrl);
 		$request->setMethod(\Zend\Http\Request::METHOD_POST);
 		$request->getHeaders()->addHeaders(array(
 			'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8'));
@@ -108,11 +109,16 @@ class BasicHttpClient implements ClientInterface
 	}
 
 	/**
-	 * @return string the API base URL
+	 * @see ClientInterface
 	 */
-	protected function getBaseUrl()
+	public function getBaseUrl($includeCredentials = true)
 	{
-		return 'http://'.$this->_hostname.':'.$this->_port.'/api';
+		$credentials = '';
+		
+		if ($includeCredentials)
+			$credentials = $this->_username.':'.$this->_password.'@';
+		
+		return 'http://'.$credentials.$this->_hostname.':'.$this->_port;
 	}
 
 	/**
