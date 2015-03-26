@@ -156,13 +156,21 @@ class Tvheadend
 
 	/**
 	 * Returns the list of channels
+	 * @param model\Filter (optional) filter to use
 	 * @return model\Channel[]
 	 */
-	public function getChannels()
+	public function getChannels(model\Filter $filter = null)
 	{
 		$channels = array();
 
-		$response = $this->_client->getResponse(new client\Request('/channel/grid'));
+		// Create the request
+		$request = new client\Request('/channel/grid');
+		
+		if ($filter)
+			$request->setFilter($filter);
+		
+		// Get the response
+		$response = $this->_client->getResponse($request);
 		$rawContent = $response->getContent();
 
 		$content = json_decode($rawContent);

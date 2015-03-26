@@ -2,6 +2,8 @@
 
 namespace jalle19\tvheadend\client;
 
+use jalle19\tvheadend\model;
+
 /**
  * Represents an API request
  * 
@@ -61,6 +63,15 @@ class Request
 	public function getParameters()
 	{
 		return $this->_parameters;
+	}
+	
+	/**
+	 * Adds the specified filter to the request
+	 * @param \jalle19\tvheadend\model\Filter $filter
+	 */
+	public function setFilter(model\Filter $filter)
+	{
+		$this->_parameters['filter'] = json_encode($filter);
 	}
 
 }
