@@ -59,7 +59,19 @@ class Tvheadend
 
 		// Set credentials
 		if ($username !== null && $password !== null)
-			$this->_client->setCredentials($username, $password);
+			$this->setCredentials($username, $password);
+	}
+
+
+	/**
+	 * Sets the credentials to use
+	 *
+	 * @param string $username
+	 * @param string $password
+	 */
+	public function setCredentials($username, $password)
+	{
+		$this->_client->setCredentials($username, $password);
 	}
 
 	/**
