@@ -32,16 +32,11 @@ abstract class Node implements \JsonSerializable
 	protected $_properties;
 
 	/**
-	 * @return the default properties for this model
-	 */
-	abstract protected function getDefaultProperties();
-
-	/**
 	 * @return stdClass a JSON representation of this object
 	 */
 	public function jsonSerialize()
 	{
-		return array_merge($this->getDefaultProperties(), $this->_properties);
+		return $this->_properties;
 	}
 
 	/**

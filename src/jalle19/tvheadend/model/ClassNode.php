@@ -23,7 +23,7 @@ namespace jalle19\tvheadend\model;
  *
  * @author Sam Stenvall <neggelandia@gmail.com>
  */
-abstract class ClassNode extends Node
+abstract class ClassNode extends CreatableNode
 {
 
 	/**
