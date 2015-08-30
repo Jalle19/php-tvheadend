@@ -101,7 +101,8 @@ class BasicHttpClient implements ClientInterface
 		$request->setUri($baseUrl.$relativeUrl);
 		$request->setMethod(\Zend\Http\Request::METHOD_POST);
 		$request->getHeaders()->addHeaders(array(
-			'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8'));
+			'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8',
+			'Accept-Encoding'=>'identity')); // plain text
 
 		$this->addDefaultParameters($request);
 
