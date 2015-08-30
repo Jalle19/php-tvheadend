@@ -3,6 +3,8 @@
 namespace jalle19\tvheadend;
 
 use jalle19\tvheadend\exception;
+use jalle19\tvheadend\model\ConnectionStatus;
+use jalle19\tvheadend\model\InputStatus;
 
 /**
  * Main class for interacting with tvheadend. Each object represents an 
@@ -191,6 +193,66 @@ class Tvheadend
 			$channels[] = model\Channel::fromRawEntry($entry);
 
 		return $channels;
+	}
+
+
+	/**
+	 * @return model\SubscriptionStatus[]
+	 */
+	public function getSubscriptionStatus()
+	{
+		$subscriptions = [];
+		$request = new client\Request('/status/subscriptions');
+
+		$response   = $this->_client->getResponse($request);
+		$rawContent = $response->getContent();
+
+		$content = json_decode($rawContent);
+
+		foreach($content->entries as $rawEntry)
+			$subscriptions[] = model\SubscriptionStatus::fromRawEntry($rawEntry);
+
+		return $subscriptions;
+	}
+
+
+	/**
+	 * @return ConnectionStatus[]
+	 */
+	public function getConnectionStatus()
+	{
+		$connections = [];
+		$request     = new client\Request('/status/connections');
+
+		$response   = $this->_client->getResponse($request);
+		$rawContent = $response->getContent();
+
+		$content = json_decode($rawContent);
+
+		foreach ($content->entries as $rawEntry)
+			$connections[] = model\ConnectionStatus::fromRawEntry($rawEntry);
+
+		return $connections;
+	}
+
+
+	/**
+	 * @return InputStatus[]
+	 */
+	public function getInputStatus()
+	{
+		$inputs  = [];
+		$request = new client\Request('/status/inputs');
+
+		$response   = $this->_client->getResponse($request);
+		$rawContent = $response->getContent();
+
+		$content = json_decode($rawContent);
+
+		foreach ($content->entries as $rawEntry)
+			$inputs[] = model\InputStatus::fromRawEntry($rawEntry);
+
+		return $inputs;
 	}
 	
 	/**
