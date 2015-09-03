@@ -3,6 +3,9 @@
 namespace jalle19\tvheadend;
 
 use jalle19\tvheadend\exception;
+use jalle19\tvheadend\model\comet\BoxId;
+use jalle19\tvheadend\model\comet\InputStatusNotification;
+use jalle19\tvheadend\model\comet\SubscriptionNotification;
 use jalle19\tvheadend\model\ConnectionStatus;
 use jalle19\tvheadend\model\InputStatus;
 
@@ -32,6 +35,14 @@ class Tvheadend
 {
 
 	/**
+	 * The maximum boxid age (in seconds)
+	 */
+	const MAXIMUM_BOXID_AGE = 5;
+
+	const NOTIFICATION_CLASS_INPUT_STATUS  = 'input_status';
+	const NOTIFICATION_CLASS_SUBSCRIPTIONS = 'subscriptions';
+
+	/**
 	 * @var string the hostname
 	 */
 	private $_hostname;
@@ -45,6 +56,12 @@ class Tvheadend
 	 * @var client\ClientInterface the client used for communication
 	 */
 	private $_client;
+
+	/**
+	 * @var BoxId the boxid to use when performing comet poll requests
+	 */
+	private $_boxId;
+
 
 	/**
 	 * Class constructor
@@ -209,8 +226,20 @@ class Tvheadend
 
 		$content = json_decode($rawContent);
 
-		foreach($content->entries as $rawEntry)
-			$subscriptions[] = model\SubscriptionStatus::fromRawEntry($rawEntry);
+		// Request additional data through the comet poller
+		$notifications = $this->getCometNotifications(self::NOTIFICATION_CLASS_SUBSCRIPTIONS);
+
+		foreach ($content->entries as $rawEntry)
+		{
+			$subscription = model\SubscriptionStatus::fromRawEntry($rawEntry);
+
+			// See if there's a notification for this subscription
+			foreach ($notifications as $notification)
+				if ($notification->id === $subscription->id)
+					$subscription->augment($notification);
+
+			$subscriptions[] = $subscription;
+		}
 
 		return $subscriptions;
 	}
@@ -254,6 +283,49 @@ class Tvheadend
 
 		return $inputs;
 	}
+
+
+	/**
+	 * @param string $class the type of notifications to return
+	 * @return array the comet status notifications
+	 */
+	public function getCometNotifications($class)
+	{
+		// Ensure we're using a valid boxid
+		if ($this->_boxId === null || $this->_boxId->getAge() > self::MAXIMUM_BOXID_AGE)
+			$this->_boxId = $this->generateCometPollBoxId();
+
+		$request = new client\Request('/comet/poll', array(
+			'boxid' => $this->_boxId->getBoxId(),
+		));
+
+		$response = $this->_client->getResponse($request);
+		$content  = json_decode($response->getContent());
+
+		// Parse the messages
+		$messages = array();
+
+		foreach ($content->messages as $message)
+		{
+			$notificationClass = $message->notificationClass;
+
+			if ($notificationClass !== $class)
+				continue;
+
+			switch ($notificationClass)
+			{
+				case self::NOTIFICATION_CLASS_INPUT_STATUS:
+					$messages[] = InputStatusNotification::fromRawEntry($message);
+					break;
+				case self::NOTIFICATION_CLASS_SUBSCRIPTIONS:
+					$messages[] = SubscriptionNotification::fromRawEntry($message);
+					break;
+			}
+		}
+
+		return $messages;
+	}
+
 	
 	/**
 	 * @param \jalle19\tvheadend\IStreamable $streamable a streamable
@@ -280,5 +352,21 @@ class Tvheadend
 	{
 		$this->_client = $client;
 	}
+
+	/**
+	 * Requests and returns a new "boxid" from the comet poll API
+	 * @return BoxId
+	 */
+	private function generateCometPollBoxId()
+	{
+		$request  = new client\Request('/comet/poll');
+		$response = $this->_client->getResponse($request);
+
+		$content = json_decode($response->getContent());
+		$boxId   = $content->boxid;
+
+		return new BoxId($boxId);
+	}
+
 
 }

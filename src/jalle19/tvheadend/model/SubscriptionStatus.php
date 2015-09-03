@@ -2,6 +2,8 @@
 
 namespace jalle19\tvheadend\model;
 
+use jalle19\tvheadend\model\comet\SubscriptionNotification;
+
 /**
  * Represents a subscription status
  *
@@ -41,5 +43,17 @@ class SubscriptionStatus extends Node
 	const STATE_TESTING = 'testing';
 	const STATE_RUNNING = 'running';
 	const STATE_BAD     = 'bad';
+
+
+	/**
+	 * Augments this instance with data from the notification
+	 *
+	 * @param SubscriptionNotification $notification
+	 */
+	public function augment(SubscriptionNotification $notification)
+	{
+		$this->in  = $notification->in;
+		$this->out = $notification->out;
+	}
 
 }
