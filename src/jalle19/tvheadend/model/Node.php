@@ -42,11 +42,14 @@ abstract class Node implements \JsonSerializable
 	/**
 	 * Magic getter
 	 * @param string $name
-	 * @return mixed
+	 * @return mixed the specified property, or null if the property doesn't exist
 	 */
 	public function __get($name)
 	{
-		return $this->_properties[$name];
+		if (isset($this->_properties[$name]))
+			return $this->_properties[$name];
+		else
+			return null;
 	}
 
 	/**
