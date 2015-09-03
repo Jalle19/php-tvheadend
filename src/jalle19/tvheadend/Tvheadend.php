@@ -93,6 +93,25 @@ class Tvheadend
 		$this->_client->setCredentials($username, $password);
 	}
 
+
+	/**
+	 * @return string the hostname
+	 */
+	public function getHostname()
+	{
+		return $this->_hostname;
+	}
+
+
+	/**
+	 * @return int the port
+	 */
+	public function getPort()
+	{
+		return $this->_port;
+	}
+
+
 	/**
 	 * Returns data about a node, such as the class name
 	 * @param string $uuid
