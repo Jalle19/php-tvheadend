@@ -83,7 +83,7 @@ class Tvheadend
 	 */
 	public function getNodeData($uuid)
 	{
-		$request = new client\Request('/idnode/load', array(
+		$request = new client\Request('/api/idnode/load', array(
 			'uuid'=>$uuid,
 			'meta'=>0));
 
@@ -102,7 +102,7 @@ class Tvheadend
 	 */
 	public function createNetwork($network)
 	{
-		$request = new client\Request('/mpegts/network/create', array(
+		$request = new client\Request('/api/mpegts/network/create', array(
 			'class'=>$network->getClassName(),
 			'conf'=>json_encode($network)));
 
@@ -132,7 +132,7 @@ class Tvheadend
 	 */
 	public function getNetworks()
 	{
-		$response = $this->_client->getResponse(new client\Request('/mpegts/network/grid'));
+		$response = $this->_client->getResponse(new client\Request('/api/mpegts/network/grid'));
 		$content = json_decode($response->getContent());
 
 		$networks = array();
@@ -161,7 +161,7 @@ class Tvheadend
 	 */
 	public function createMultiplex($network, $multiplex)
 	{
-		$request = new client\Request('/mpegts/network/mux_create', array(
+		$request = new client\Request('/api/mpegts/network/mux_create', array(
 			'uuid'=>$network->uuid,
 			'conf'=>json_encode($multiplex)));
 
@@ -178,7 +178,7 @@ class Tvheadend
 		$channels = array();
 
 		// Create the request
-		$request = new client\Request('/channel/grid');
+		$request = new client\Request('/api/channel/grid');
 		
 		if ($filter)
 			$request->setFilter($filter);
@@ -202,7 +202,7 @@ class Tvheadend
 	public function getSubscriptionStatus()
 	{
 		$subscriptions = [];
-		$request = new client\Request('/status/subscriptions');
+		$request = new client\Request('/api/status/subscriptions');
 
 		$response   = $this->_client->getResponse($request);
 		$rawContent = $response->getContent();
@@ -222,7 +222,7 @@ class Tvheadend
 	public function getConnectionStatus()
 	{
 		$connections = [];
-		$request     = new client\Request('/status/connections');
+		$request     = new client\Request('/api/status/connections');
 
 		$response   = $this->_client->getResponse($request);
 		$rawContent = $response->getContent();
@@ -242,7 +242,7 @@ class Tvheadend
 	public function getInputStatus()
 	{
 		$inputs  = [];
-		$request = new client\Request('/status/inputs');
+		$request = new client\Request('/api/status/inputs');
 
 		$response   = $this->_client->getResponse($request);
 		$rawContent = $response->getContent();

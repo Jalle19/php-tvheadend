@@ -96,7 +96,7 @@ class BasicHttpClient implements ClientInterface
 	 */
 	protected function createBaseRequest($relativeUrl)
 	{
-		$baseUrl = $this->getBaseUrl(false).'/api';
+		$baseUrl = $this->getBaseUrl(false);
 		$request = new \Zend\Http\Request();
 		$request->setUri($baseUrl.$relativeUrl);
 		$request->setMethod(\Zend\Http\Request::METHOD_POST);
