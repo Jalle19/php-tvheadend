@@ -226,8 +226,11 @@ class Tvheadend
 
 		$content = json_decode($rawContent);
 
-		// Request additional data through the comet poller
-		$notifications = $this->getCometNotifications(self::NOTIFICATION_CLASS_SUBSCRIPTIONS);
+		// If we have any subscriptions, request additional data through the comet poller
+		if (count($content->entries) > 0)
+			$notifications = $this->getCometNotifications(self::NOTIFICATION_CLASS_SUBSCRIPTIONS);
+		else
+			$notifications = array();
 
 		foreach ($content->entries as $rawEntry)
 		{
