@@ -56,9 +56,14 @@ class Channel extends CreatableNode implements IStreamable
 			'bouquet'=>'');
 	}
 	
-	public function getUrl()
+	public function getUrl($profile = null)
 	{
-		return '/stream/channel/'.$this->uuid;
+		$url = '/stream/channel/' . $this->uuid;
+
+		if ($profile !== null)
+			$url .= '?profile=' . $profile;
+
+		return $url;
 	}
 
 }

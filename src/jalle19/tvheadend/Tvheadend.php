@@ -351,11 +351,13 @@ class Tvheadend
 	
 	/**
 	 * @param \jalle19\tvheadend\IStreamable $streamable a streamable
+	 * @param string $profile (optional) which streaming profile to use. Defaults 
+	 * to null, meaning the server decides
 	 * @return string the absolute URL to the streamable
 	 */
-	public function getAbsoluteUrl(model\IStreamable $streamable)
+	public function getAbsoluteUrl(model\IStreamable $streamable, $profile = null)
 	{
-		return $this->_client->getBaseUrl().$streamable->getUrl();
+		return $this->_client->getBaseUrl().$streamable->getUrl($profile);
 	}
 
 	/**

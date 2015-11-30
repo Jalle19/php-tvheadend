@@ -27,8 +27,9 @@ interface IStreamable
 {
 	
 	/**
+	 * @param string|null $profile the streaming profile to use, or null to let the server decide
 	 * @return string the relative URL to the resource
 	 */
-	public function getUrl();
+	public function getUrl($profile = null);
 	
 }
