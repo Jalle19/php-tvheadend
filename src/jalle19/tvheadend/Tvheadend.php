@@ -231,6 +231,38 @@ class Tvheadend
 		return $channels;
 	}
 
+	/**
+	 * Retrieves the EPG events for the specified channel
+	 * @param model\Channel $channel
+	 * @param int           $limit (optional) limit how many events are returned
+	 *
+	 * @return model\Event[] the events
+	 */
+	public function getEpgForChannel(model\Channel $channel, $limit = 0)
+	{
+		$params = array(
+			'start' => 0,
+			'channel' => $channel->uuid,
+		);
+
+		if ($limit > 0)
+			$params['limit'] = $limit;
+
+		$request = new client\Request('/api/epg/events/grid', $params);
+		$response = $this->_client->getResponse($request);
+		$rawContent = $response->getContent();
+
+		$content = json_decode($rawContent);
+		$events = [];
+
+		if ($content->totalCount > 0)
+		{
+			foreach ($content->entries as $entry)
+				$events[] = model\Event::fromRawEntry($entry);
+		}
+
+		return $events;
+	}
 
 	/**
 	 * @return model\SubscriptionStatus[]
