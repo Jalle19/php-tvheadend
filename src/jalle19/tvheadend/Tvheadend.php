@@ -92,6 +92,18 @@ class Tvheadend
 	{
 		$this->_client->setCredentials($username, $password);
 	}
+	
+	/**
+	 * Attempts to retrieve the root path on the server to test
+	 * the connection
+	 *
+	 * @throws exception\RequestFailedException if the connection attempt fails
+	 */
+	public function attemptConnection()
+	{
+		$request = new client\Request('/');
+		$this->_client->getResponse($request);
+	}
 
 
 	/**
