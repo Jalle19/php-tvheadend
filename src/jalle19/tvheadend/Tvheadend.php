@@ -5,6 +5,7 @@ namespace jalle19\tvheadend;
 use jalle19\tvheadend\exception;
 use jalle19\tvheadend\model\comet\BoxId;
 use jalle19\tvheadend\model\comet\InputStatusNotification;
+use jalle19\tvheadend\model\comet\LogMessageNotification;
 use jalle19\tvheadend\model\comet\SubscriptionNotification;
 use jalle19\tvheadend\model\ConnectionStatus;
 use jalle19\tvheadend\model\InputStatus;
@@ -41,6 +42,7 @@ class Tvheadend
 
 	const NOTIFICATION_CLASS_INPUT_STATUS  = 'input_status';
 	const NOTIFICATION_CLASS_SUBSCRIPTIONS = 'subscriptions';
+	const NOTIFICATION_CLASS_LOG_MESSAGE = 'logmessage';
 
 	/**
 	 * @var string the hostname
@@ -384,6 +386,9 @@ class Tvheadend
 					break;
 				case self::NOTIFICATION_CLASS_SUBSCRIPTIONS:
 					$messages[] = SubscriptionNotification::fromRawEntry($message);
+					break;
+				case self::NOTIFICATION_CLASS_LOG_MESSAGE:
+					$messages[] = LogMessageNotification::fromRawEntry($message);
 					break;
 			}
 		}
