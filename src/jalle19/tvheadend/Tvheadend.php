@@ -355,6 +355,16 @@ class Tvheadend
 
 
 	/**
+	 * Returns the available log messages
+	 * @return LogMessageNotification[] the log messages
+	 */
+	public function getLogMessages()
+	{
+		return $this->getCometNotifications(self::NOTIFICATION_CLASS_LOG_MESSAGE, true);
+	}
+
+
+	/**
 	 * @param string $class the type of notifications to return
 	 * @param boolean $immediate whether to long poll or return immediately
 	 * @return array the comet status notifications
