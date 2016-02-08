@@ -58,10 +58,11 @@ class Tvheadend
 	private $_client;
 
 	/**
-	 * @var BoxId the boxid to use when performing comet poll requests
+	 * @var BoxId[] the list of which box IDs to use for which comet poll 
+	 * requests. Each key is a notification class and the value is the 
+	 * corresponding box ID.
 	 */
-	private $_boxId;
-
+	private $_boxIds = array();
 
 	/**
 	 * Class constructor
@@ -357,12 +358,10 @@ class Tvheadend
 	 */
 	public function getCometNotifications($class)
 	{
-		// Ensure we're using a valid boxid
-		if ($this->_boxId === null || $this->_boxId->getAge() > self::MAXIMUM_BOXID_AGE)
-			$this->_boxId = $this->generateCometPollBoxId();
+		$this->ensureValidBoxId($class);
 
 		$request = new client\Request('/comet/poll', array(
-			'boxid' => $this->_boxId->getBoxId(),
+			'boxid' => $this->_boxIds[$class]->getBoxId(),
 		));
 
 		$response = $this->_client->getResponse($request);
@@ -436,5 +435,14 @@ class Tvheadend
 		return new BoxId($boxId);
 	}
 
+	/**
+	 * Ensures that the specifeid class has a valid box ID defined
+	 * @param string $class
+	 */
+	private function ensureValidBoxId($class)
+	{
+		if (!array_key_exists($class, $this->_boxIds) || $this->_boxIds[$class]->getAge() > self::MAXIMUM_BOXID_AGE)
+			$this->_boxIds[$class] = $this->generateCometPollBoxId();
+	}
 
 }
