@@ -356,14 +356,16 @@ class Tvheadend
 
 	/**
 	 * @param string $class the type of notifications to return
+	 * @param boolean $immediate whether to long poll or return immediately
 	 * @return array the comet status notifications
 	 */
-	public function getCometNotifications($class)
+	public function getCometNotifications($class, $immediate = false)
 	{
 		$this->ensureValidBoxId($class);
 
 		$request = new client\Request('/comet/poll', array(
 			'boxid' => $this->_boxIds[$class]->getBoxId(),
+			'immediate' => $immediate ? 1 : 0,
 		));
 
 		$response = $this->_client->getResponse($request);
