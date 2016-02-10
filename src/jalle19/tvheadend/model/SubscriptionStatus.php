@@ -44,6 +44,24 @@ class SubscriptionStatus extends Node
 	const STATE_RUNNING = 'running';
 	const STATE_BAD     = 'bad';
 
+	const TYPE_STREAMING = 'streaming';
+	const TYPE_RECORDING = 'dvr';
+	const TYPE_EPGGRAB   = 'epggrab';
+
+
+	/**
+	 * @return string the subscription type
+	 */
+	public function getType()
+	{
+		if (strpos($this->title, 'DVR: ') !== false)
+			return self::TYPE_RECORDING;
+		else if (strpos($this->title, 'epggrab') !== false)
+			return self::TYPE_EPGGRAB;
+
+		return self::TYPE_STREAMING;
+	}
+
 
 	/**
 	 * Augments this instance with data from the notification
