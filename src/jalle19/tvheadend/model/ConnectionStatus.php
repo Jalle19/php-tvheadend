@@ -33,4 +33,12 @@ namespace jalle19\tvheadend\model;
 class ConnectionStatus extends Node
 {
 
+	/**
+	 * @return bool whether the connection is anonymous (i.e. uses a ticket)
+	 */
+	public function isAnonymous()
+	{
+		return !$this->hasProperty('user');
+	}
+
 }

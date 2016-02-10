@@ -63,6 +63,17 @@ abstract class Node implements \JsonSerializable
 		$this->_properties[$name] = $value;
 	}
 
+
+	/**
+	 * @param string $name
+	 *
+	 * @return bool whether the object has the specified property
+	 */
+	public function hasProperty($name)
+	{
+		return array_key_exists($name, $this->_properties);
+	}
+
 	/**
 	 * Constructs an appropriate object based on the raw entry
 	 * @param stdClass $entry the raw entry
