@@ -4,7 +4,6 @@ namespace Jalle19\tvheadend\client;
 
 use Jalle19\tvheadend\exception;
 use Zend\Http\Client;
-use Zend\Http\Request;
 
 /**
  * Basic HTTP client for communicating with tvheadend
@@ -83,6 +82,7 @@ class BasicHttpClient implements ClientInterface
 		foreach ($request->getParameters() as $name=> $value)
 			$httpRequest->getPost()->set($name, $value);
 
+		/* @var $response \Zend\Http\Response */
 		$response = $this->_httpClient->dispatch($httpRequest);
 
 		if ($response->getStatusCode() !== 200)
@@ -99,9 +99,9 @@ class BasicHttpClient implements ClientInterface
 	protected function createBaseRequest($relativeUrl)
 	{
 		$baseUrl = $this->getBaseUrl(false);
-		$request = new Request();
+		$request = new \Zend\Http\Request();
 		$request->setUri($baseUrl.$relativeUrl);
-		$request->setMethod(Request::METHOD_POST);
+		$request->setMethod(\Zend\Http\Request::METHOD_POST);
 		$request->getHeaders()->addHeaders(array(
 			'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8',
 			'Accept-Encoding'=>'identity')); // plain text
@@ -126,7 +126,7 @@ class BasicHttpClient implements ClientInterface
 
 	/**
 	 * Adds default parameters to the request, such as sorting
-	 * @param Request $request the request
+	 * @param \Zend\Http\Request $request the request
 	 */
 	protected function addDefaultParameters(&$request)
 	{
