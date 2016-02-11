@@ -41,7 +41,7 @@ class BoxId
 
 
 	/**
-	 * @param $boxId the boxid
+	 * @param string $boxId the boxid
 	 */
 	public function __construct($boxId)
 	{

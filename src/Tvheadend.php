@@ -9,6 +9,7 @@ use Jalle19\tvheadend\model\comet\LogMessageNotification;
 use Jalle19\tvheadend\model\comet\SubscriptionNotification;
 use Jalle19\tvheadend\model\ConnectionStatus;
 use Jalle19\tvheadend\model\InputStatus;
+use Jalle19\tvheadend\model\IStreamable;
 
 /**
  * Main class for interacting with tvheadend. Each object represents an 
@@ -130,7 +131,7 @@ class Tvheadend
 	/**
 	 * Returns data about a node, such as the class name
 	 * @param string $uuid
-	 * @return stdClass the raw node data response
+	 * @return \stdClass the raw node data response
 	 */
 	public function getNodeData($uuid)
 	{
@@ -208,7 +209,7 @@ class Tvheadend
 	/**
 	 * Creates the specified multiplex on the specified network
 	 * @param model\network\Network $network
-	 * @param model\network\Multiplex $multiplex
+	 * @param model\multiplex\Multiplex $multiplex
 	 */
 	public function createMultiplex($network, $multiplex)
 	{
@@ -221,10 +222,10 @@ class Tvheadend
 
 	/**
 	 * Returns the list of channels
-	 * @param model\Filter (optional) filter to use
+	 * @param model\Filter $filter (optional) filter to use
 	 * @return model\Channel[]
 	 */
-	public function getChannels(model\Filter $filter = null)
+	public function getChannels($filter = null)
 	{
 		$channels = array();
 
@@ -410,12 +411,12 @@ class Tvheadend
 
 	
 	/**
-	 * @param \Jalle19\tvheadend\IStreamable $streamable a streamable
+	 * @param IStreamable $streamable a streamable
 	 * @param string $profile (optional) which streaming profile to use. Defaults 
 	 * to null, meaning the server decides
 	 * @return string the absolute URL to the streamable
 	 */
-	public function getAbsoluteUrl(model\IStreamable $streamable, $profile = null)
+	public function getAbsoluteUrl(IStreamable $streamable, $profile = null)
 	{
 		return $this->_client->getBaseUrl().$streamable->getUrl($profile);
 	}

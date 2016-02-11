@@ -2,6 +2,8 @@
 
 namespace Jalle19\tvheadend\client;
 
+use Jalle19\tvheadend\exception\RequestFailedException;
+
 /**
  * The interface for API clients
  * 
@@ -36,8 +38,8 @@ interface ClientInterface
 	/**
 	 * Executes the specified request and returns the response
 	 * @param Request $request
-	 * @return \Jalle19\tvheadend\client\Response
-	 * @throws exception\RequestFailedException
+	 * @return Response
+	 * @throws RequestFailedException
 	 */
 	public function getResponse($request);
 	

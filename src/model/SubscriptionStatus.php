@@ -35,6 +35,8 @@ use Jalle19\tvheadend\model\comet\SubscriptionNotification;
  * @property string $title
  * @property string $channel
  * @property string $service
+ * @property int $in
+ * @property int $out
  */
 class SubscriptionStatus extends Node
 {

@@ -2,6 +2,7 @@
 
 namespace Jalle19\tvheadend\cli;
 
+use Commando\Command;
 use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -58,7 +59,7 @@ class TvheadendCommand
 		$this->logger = new Logger('logger');
 		$this->logger->pushHandler($handler);
 
-		$command = new \Commando\Command();
+		$command = new Command();
 		
 		if (!empty($prefix))
 			$prefix .= '-';
@@ -66,18 +67,18 @@ class TvheadendCommand
 		// Required arguments
 		$command->option($prefix.'tvheadend-hostname')
 				->require()
-				->describeAs('The hostname where tvheadend is running');
+				->describe('The hostname where tvheadend is running');
 
 		// Optional arguments
 		$command->option($prefix.'tvheadend-http-port')
 				->default(9981)
-				->describeAs('The tvheadend HTTP port');
+				->describe('The tvheadend HTTP port');
 
 		$command->option($prefix.'tvheadend-username')
-				->describeAs('The tvheadend username');
+				->describe('The tvheadend username');
 
 		$command->option($prefix.'tvheadend-password')
-				->describeAs('The tvheadend password');
+				->describe('The tvheadend password');
 
 		$this->command = $command;
 	}
@@ -91,8 +92,6 @@ class TvheadendCommand
 	 */
 	protected function askQuestion($question, $choices, $default)
 	{
-		$response = '';
-
 		// Ask until we get a valid response
 		do
 		{

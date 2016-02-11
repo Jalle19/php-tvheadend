@@ -33,7 +33,7 @@ abstract class Node implements \JsonSerializable
 	protected $_properties;
 
 	/**
-	 * @return stdClass a JSON representation of this object
+	 * @inheritdoc
 	 */
 	public function jsonSerialize()
 	{
@@ -76,8 +76,8 @@ abstract class Node implements \JsonSerializable
 
 	/**
 	 * Constructs an appropriate object based on the raw entry
-	 * @param stdClass $entry the raw entry
-	 * @return \Jalle19\tvheadend\model\className
+	 * @param \stdClass $entry the raw entry
+	 * @return mixed
 	 */
 	public static function fromRawEntry($entry)
 	{

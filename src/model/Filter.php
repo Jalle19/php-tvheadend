@@ -27,7 +27,7 @@ class Filter implements \JsonSerializable
 {
 	
 	/**
-	 * @var stdClass the filter definition
+	 * @var \stdClass the filter definition
 	 */
 	private $_filter = array();
 
@@ -48,8 +48,7 @@ class Filter implements \JsonSerializable
 	}
 
 	/**
-	 * Implements JsonSerializable
-	 * @return stdClass the object to serialize
+	 * @inheritdoc
 	 */
 	public function jsonSerialize()
 	{

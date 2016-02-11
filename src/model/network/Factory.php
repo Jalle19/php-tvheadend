@@ -48,7 +48,7 @@ class Factory
 	/**
 	 * Factory method when dealing with raw entries
 	 * @param string $className the network type (class)
-	 * @param string $entry the network entry
+	 * @param \stdClass $entry the network entry
 	 * @return Network
 	 * @throws \Exception
 	 */

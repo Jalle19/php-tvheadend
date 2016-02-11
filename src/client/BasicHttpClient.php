@@ -3,6 +3,8 @@
 namespace Jalle19\tvheadend\client;
 
 use Jalle19\tvheadend\exception;
+use Zend\Http\Client;
+use Zend\Http\Request;
 
 /**
  * Basic HTTP client for communicating with tvheadend
@@ -62,7 +64,7 @@ class BasicHttpClient implements ClientInterface
 	{
 		$this->_hostname = $hostname;
 		$this->_port = $port;
-		$this->_httpClient = new \Zend\Http\Client();
+		$this->_httpClient = new Client();
 	}
 
 	public function setCredentials($username, $password)
@@ -97,9 +99,9 @@ class BasicHttpClient implements ClientInterface
 	protected function createBaseRequest($relativeUrl)
 	{
 		$baseUrl = $this->getBaseUrl(false);
-		$request = new \Zend\Http\Request();
+		$request = new Request();
 		$request->setUri($baseUrl.$relativeUrl);
-		$request->setMethod(\Zend\Http\Request::METHOD_POST);
+		$request->setMethod(Request::METHOD_POST);
 		$request->getHeaders()->addHeaders(array(
 			'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8',
 			'Accept-Encoding'=>'identity')); // plain text
@@ -110,7 +112,7 @@ class BasicHttpClient implements ClientInterface
 	}
 
 	/**
-	 * @see ClientInterface
+	 * @inheritdoc
 	 */
 	public function getBaseUrl($includeCredentials = true)
 	{
@@ -136,16 +138,6 @@ class BasicHttpClient implements ClientInterface
 
 		foreach ($defaultParameters as $name=> $value)
 			$request->getPost()->set($name, $value);
-	}
-
-	/**
-	 * Modifies the path to ensure it has a beginning slash and no trailing slash
-	 * @param stirng $path the path
-	 * @return string
-	 */
-	private function normalizePath($path)
-	{
-		return '/'.trim($path, '/');
 	}
 
 }
