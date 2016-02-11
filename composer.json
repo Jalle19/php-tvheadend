@@ -15,7 +15,7 @@
         "monolog/monolog": "1.12.*"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "jalle19\\tvheadend": "src"
         }
     }
