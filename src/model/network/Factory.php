@@ -29,10 +29,18 @@ class Factory
 {
 
 	/**
+	 * Prevent instantiation
+	 */
+	private function __construct()
+	{
+
+	}
+
+	/**
 	 * Factory method
 	 * @param string $className the network type (class)
-	 * @return \Jalle19\tvheadend\model\network\Network
-	 * @throws \Exception
+	 * @return Network
+	 * @throws exception\NotImplementedException
 	 */
 	public static function factory($className)
 	{
@@ -45,12 +53,13 @@ class Factory
 		}
 	}
 
+
 	/**
 	 * Factory method when dealing with raw entries
 	 * @param string $className the network type (class)
 	 * @param \stdClass $entry the network entry
 	 * @return Network
-	 * @throws \Exception
+	 * @throws exception\NotImplementedException
 	 */
 	public static function fromRawEntry($className, $entry)
 	{
