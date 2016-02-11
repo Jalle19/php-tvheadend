@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\model;
+namespace Jalle19\tvheadend\model;
 
 /**
  * Base class for all API object models
@@ -77,7 +77,7 @@ abstract class Node implements \JsonSerializable
 	/**
 	 * Constructs an appropriate object based on the raw entry
 	 * @param stdClass $entry the raw entry
-	 * @return \jalle19\tvheadend\model\className
+	 * @return \Jalle19\tvheadend\model\className
 	 */
 	public static function fromRawEntry($entry)
 	{

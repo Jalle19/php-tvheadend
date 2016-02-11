@@ -1,14 +1,14 @@
 <?php
 
-namespace jalle19\tvheadend;
+namespace Jalle19\tvheadend;
 
-use jalle19\tvheadend\exception;
-use jalle19\tvheadend\model\comet\BoxId;
-use jalle19\tvheadend\model\comet\InputStatusNotification;
-use jalle19\tvheadend\model\comet\LogMessageNotification;
-use jalle19\tvheadend\model\comet\SubscriptionNotification;
-use jalle19\tvheadend\model\ConnectionStatus;
-use jalle19\tvheadend\model\InputStatus;
+use Jalle19\tvheadend\exception;
+use Jalle19\tvheadend\model\comet\BoxId;
+use Jalle19\tvheadend\model\comet\InputStatusNotification;
+use Jalle19\tvheadend\model\comet\LogMessageNotification;
+use Jalle19\tvheadend\model\comet\SubscriptionNotification;
+use Jalle19\tvheadend\model\ConnectionStatus;
+use Jalle19\tvheadend\model\InputStatus;
 
 /**
  * Main class for interacting with tvheadend. Each object represents an 
@@ -410,7 +410,7 @@ class Tvheadend
 
 	
 	/**
-	 * @param \jalle19\tvheadend\IStreamable $streamable a streamable
+	 * @param \Jalle19\tvheadend\IStreamable $streamable a streamable
 	 * @param string $profile (optional) which streaming profile to use. Defaults 
 	 * to null, meaning the server decides
 	 * @return string the absolute URL to the streamable
@@ -430,7 +430,7 @@ class Tvheadend
 
 	/**
 	 * 
-	 * @param \jalle19\tvheadend\client\ClientInterface $client
+	 * @param \Jalle19\tvheadend\client\ClientInterface $client
 	 */
 	public function setClient(client\ClientInterface $client)
 	{

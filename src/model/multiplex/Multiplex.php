@@ -1,8 +1,8 @@
 <?php
 
-namespace jalle19\tvheadend\model\multiplex;
+namespace Jalle19\tvheadend\model\multiplex;
 
-use jalle19\tvheadend\model\Node;
+use Jalle19\tvheadend\model\Node;
 
 /**
  * Base class for multiplexes

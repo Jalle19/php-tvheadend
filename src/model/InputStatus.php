@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\model;
+namespace Jalle19\tvheadend\model;
 
 /**
  * Represents an input status
@@ -22,7 +22,7 @@ namespace jalle19\tvheadend\model;
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * @author  Sam Stenvall <neggelandia@gmail.com>
- * @package jalle19\tvheadend\model
+ * @package Jalle19\tvheadend\model
  *
  * @property string $uuid
  * @property string $input

@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\model\comet;
+namespace Jalle19\tvheadend\model\comet;
 
 /**
  * Represents a "boxid" string which is used when using the comet polling

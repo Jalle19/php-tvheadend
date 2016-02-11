@@ -19,7 +19,7 @@ php composer.phar install
 
 ```php
 require_once('/path/to/vendor/autoload.php');
-use jalle19\tvheadend;
+use Jalle19\tvheadend;
 
 // Create a new instance
 $tvheadend = new tvheadend\Tvheadend('localhost', 9981);

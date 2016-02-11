@@ -1,8 +1,8 @@
 <?php
 
-namespace jalle19\tvheadend\model;
+namespace Jalle19\tvheadend\model;
 
-use jalle19\tvheadend\model\comet\SubscriptionNotification;
+use Jalle19\tvheadend\model\comet\SubscriptionNotification;
 
 /**
  * Represents a subscription status
@@ -24,7 +24,7 @@ use jalle19\tvheadend\model\comet\SubscriptionNotification;
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * @author  Sam Stenvall <neggelandia@gmail.com>
- * @package jalle19\tvheadend\model
+ * @package Jalle19\tvheadend\model
  *
  * @property int    $id
  * @property int    $start

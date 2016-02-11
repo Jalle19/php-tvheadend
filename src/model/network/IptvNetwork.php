@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\model\network;
+namespace Jalle19\tvheadend\model\network;
 
 /**
  * Represents an IPTV network

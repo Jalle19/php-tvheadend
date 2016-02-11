@@ -1,8 +1,8 @@
 <?php
 
-namespace jalle19\tvheadend\client;
+namespace Jalle19\tvheadend\client;
 
-use jalle19\tvheadend\model;
+use Jalle19\tvheadend\model;
 
 /**
  * Represents an API request
@@ -67,7 +67,7 @@ class Request
 	
 	/**
 	 * Adds the specified filter to the request
-	 * @param \jalle19\tvheadend\model\Filter $filter
+	 * @param \Jalle19\tvheadend\model\Filter $filter
 	 */
 	public function setFilter(model\Filter $filter)
 	{

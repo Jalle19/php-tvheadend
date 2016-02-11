@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\client;
+namespace Jalle19\tvheadend\client;
 
 /**
  * The interface for API clients
@@ -36,7 +36,7 @@ interface ClientInterface
 	/**
 	 * Executes the specified request and returns the response
 	 * @param Request $request
-	 * @return \jalle19\tvheadend\client\Response
+	 * @return \Jalle19\tvheadend\client\Response
 	 * @throws exception\RequestFailedException
 	 */
 	public function getResponse($request);

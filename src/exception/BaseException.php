@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\exception;
+namespace Jalle19\tvheadend\exception;
 
 /**
  * Base exception class for this library

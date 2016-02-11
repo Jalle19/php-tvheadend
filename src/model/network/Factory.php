@@ -1,8 +1,8 @@
 <?php
 
-namespace jalle19\tvheadend\model\network;
+namespace Jalle19\tvheadend\model\network;
 
-use jalle19\tvheadend\exception;
+use Jalle19\tvheadend\exception;
 
 /**
  * Factory for creating network objects from API responses
@@ -31,7 +31,7 @@ class Factory
 	/**
 	 * Factory method
 	 * @param string $className the network type (class)
-	 * @return \jalle19\tvheadend\model\network\Network
+	 * @return \Jalle19\tvheadend\model\network\Network
 	 * @throws \Exception
 	 */
 	public static function factory($className)

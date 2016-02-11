@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\cli;
+namespace Jalle19\tvheadend\cli;
 
 use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;

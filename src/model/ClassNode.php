@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\model;
+namespace Jalle19\tvheadend\model;
 
 /**
  * Represents a class-based node

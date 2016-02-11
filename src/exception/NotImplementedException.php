@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\exception;
+namespace Jalle19\tvheadend\exception;
 
 /**
  * Copyright (C) 2015 Sam Stenvall

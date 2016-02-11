@@ -1,8 +1,8 @@
 <?php
 
-namespace jalle19\tvheadend\model\network;
+namespace Jalle19\tvheadend\model\network;
 
-use jalle19\tvheadend\model\ClassNode;
+use Jalle19\tvheadend\model\ClassNode;
 
 /**
  * Base class for networks

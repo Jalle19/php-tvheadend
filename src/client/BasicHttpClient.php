@@ -1,12 +1,12 @@
 <?php
 
-namespace jalle19\tvheadend\client;
+namespace Jalle19\tvheadend\client;
 
-use jalle19\tvheadend\exception;
+use Jalle19\tvheadend\exception;
 
 /**
  * Basic HTTP client for communicating with tvheadend
- * 
+ *
  * Copyright (C) 2015 Sam Stenvall
  *
  * This program is free software; you can redistribute it and/or
@@ -42,12 +42,12 @@ class BasicHttpClient implements ClientInterface
 	 * @var int
 	 */
 	private $_port;
-	
+
 	/**
 	 * @var string
 	 */
 	private $_username;
-	
+
 	/**
 	 * @var string
 	 */
@@ -69,7 +69,7 @@ class BasicHttpClient implements ClientInterface
 	{
 		$this->_username = $username;
 		$this->_password = $password;
-		
+
 		// Pass along to the client
 		$this->_httpClient->setAuth($username, $password);
 	}
@@ -115,10 +115,10 @@ class BasicHttpClient implements ClientInterface
 	public function getBaseUrl($includeCredentials = true)
 	{
 		$credentials = '';
-		
+
 		if ($includeCredentials)
 			$credentials = $this->_username.':'.$this->_password.'@';
-		
+
 		return 'http://'.$credentials.$this->_hostname.':'.$this->_port;
 	}
 

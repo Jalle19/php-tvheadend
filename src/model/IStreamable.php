@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\model;
+namespace Jalle19\tvheadend\model;
 
 /**
  * Base class for all API object models

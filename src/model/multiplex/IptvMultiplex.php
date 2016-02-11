@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\model\multiplex;
+namespace Jalle19\tvheadend\model\multiplex;
 
 /**
  * Represents an IPTV multiplex

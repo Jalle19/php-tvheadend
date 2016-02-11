@@ -1,8 +1,8 @@
 <?php
 
-namespace jalle19\tvheadend\model\comet;
+namespace Jalle19\tvheadend\model\comet;
 
-use jalle19\tvheadend\model\Node;
+use Jalle19\tvheadend\model\Node;
 
 /**
  * Represents an input status comet notification

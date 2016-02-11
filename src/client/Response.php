@@ -1,6 +1,6 @@
 <?php
 
-namespace jalle19\tvheadend\client;
+namespace Jalle19\tvheadend\client;
 
 /**
  * Represents an API response
