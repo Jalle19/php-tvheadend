@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "jalle19\\tvheadend": "src"
+            "jalle19\\tvheadend\\": "src"
         }
     }
 }
