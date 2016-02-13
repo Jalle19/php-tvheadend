@@ -1,18 +1,19 @@
 php-tvheadend
 =============
 
-This is a PHP library for communicating with and controlling tvheadend instances. So far it is quite limited, it only supports the features I've needed myself so far. It is built on a generic framework where each class represents a model in tvheadend, e.g. a network, a mux, a channel and so on. The library communicates with tvheadend using a HTTP client. The client can be overridden if necessary.
+This is a PHP library for communicating with and controlling tvheadend instances. So far it is quite limited, it only 
+supports the features I've needed myself so far. It is built on a generic framework where each class represents a 
+model in tvheadend, e.g. a network, a mux, a channel and so on. The library communicates with tvheadend using a 
+HTTP client. The client can be overridden if necessary.
 
-The library also includes a base class for creating CLI commands that perform specific tasks against tvheadend. To utilize it, simply include this library in your project and extend the `jalle19\tvheadend\cli\TvheadendCommand` class. The base command provides a way to request switches and flags from the user, as well as asking for input.
+The library also includes a base class for creating CLI commands that perform specific tasks against tvheadend. 
+To utilize it, simply include this library in your project and extend the `Jalle19\tvheadend\cli\TvheadendCommand` 
+class. The base command provides a way to request switches and flags from the user, as well as asking for input.
 
 ### Installation
 
 ```
-sudo apt-get install git-core curl php5-cli
-git clone https://github.com/Jalle19/php-tvheadend.git
-cd php-tvheadend
-curl -sS https://getcomposer.org/installer | php
-php composer.phar install
+composer require jalle19/php-tvheadend
 ```
 
 ### Example usage (library)
@@ -46,7 +47,7 @@ foreach ($tvheadend->getNetworks as $network)
 ```php
 // let's call this file command.php
 require_once(__DIR__.'/vendor/autoload.php');
-new jalle19\tvheadend\cli\TvheadendCommand();
+new Jalle19\tvheadend\cli\TvheadendCommand();
 ```
 
 Output when run using `php command.php`:
