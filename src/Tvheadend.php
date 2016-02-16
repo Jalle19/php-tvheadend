@@ -248,6 +248,33 @@ class Tvheadend
 	}
 
 	/**
+	 * Returns the list of services
+	 * @param model\Filter $filter (optional) filter to use
+	 * @return model\Service[]
+	 */
+	public function getServices($filter = null)
+	{
+		$services = array();
+
+		// Create the request
+		$request = new client\Request('/api/mpegts/service/grid');
+
+		if ($filter)
+			$request->setFilter($filter);
+
+		// Get the response
+		$response = $this->_client->getResponse($request);
+		$rawContent = $response->getContent();
+
+		$content = json_decode($rawContent);
+
+		foreach ($content->entries as $entry)
+			$services[] = model\Service::fromRawEntry($entry);
+
+		return $services;
+	}
+
+	/**
 	 * Retrieves the EPG events for the specified channel
 	 * @param model\Channel $channel
 	 * @param int           $limit (optional) limit how many events are returned
