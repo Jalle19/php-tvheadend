@@ -10,6 +10,7 @@ use Jalle19\tvheadend\model\comet\SubscriptionNotification;
 use Jalle19\tvheadend\model\ConnectionStatus;
 use Jalle19\tvheadend\model\InputStatus;
 use Jalle19\tvheadend\model\IStreamable;
+use Jalle19\tvheadend\model\ServiceMapperRequest;
 
 /**
  * Main class for interacting with tvheadend. Each object represents an 
@@ -437,6 +438,19 @@ class Tvheadend
 	}
 
 	
+	/**
+	 * @param ServiceMapperRequest $serviceMapperRequest
+	 */
+	public function mapServices(ServiceMapperRequest $serviceMapperRequest)
+	{
+		$request = new client\Request('/api/service/mapper/save', [
+			'node' => json_encode($serviceMapperRequest),
+		]);
+
+		$this->_client->getResponse($request);
+	}
+
+
 	/**
 	 * @param IStreamable $streamable a streamable
 	 * @param string $profile (optional) which streaming profile to use. Defaults 
