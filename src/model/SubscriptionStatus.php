@@ -46,9 +46,10 @@ class SubscriptionStatus extends Node
 	const STATE_RUNNING = 'running';
 	const STATE_BAD     = 'bad';
 
-	const TYPE_STREAMING = 'streaming';
-	const TYPE_RECORDING = 'dvr';
-	const TYPE_EPGGRAB   = 'epggrab';
+	const TYPE_STREAMING      = 'streaming';
+	const TYPE_RECORDING      = 'dvr';
+	const TYPE_EPGGRAB        = 'epggrab';
+	const TYPE_SERVICE_OR_MUX = 'service_or_mux';
 
 
 	/**
@@ -60,6 +61,8 @@ class SubscriptionStatus extends Node
 			return self::TYPE_RECORDING;
 		else if (strpos($this->title, 'epggrab') !== false)
 			return self::TYPE_EPGGRAB;
+		else if (!$this->hasProperty('channel'))
+			return self::TYPE_SERVICE_OR_MUX;
 
 		return self::TYPE_STREAMING;
 	}
