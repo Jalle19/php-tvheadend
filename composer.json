@@ -2,7 +2,7 @@
     "name": "jalle19/php-tvheadend",
     "description": "Library for communicating with tvheadend",
     "license": "GNU GPL v2.0",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "authors": [
         {
             "name": "Sam Stenvall",
