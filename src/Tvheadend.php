@@ -389,16 +389,16 @@ class Tvheadend
 	 */
 	public function getLogMessages()
 	{
-		return $this->getCometNotifications(self::NOTIFICATION_CLASS_LOG_MESSAGE, true);
+		return $this->getCometNotifications(self::NOTIFICATION_CLASS_LOG_MESSAGE);
 	}
 
 
 	/**
 	 * @param string $class the type of notifications to return
-	 * @param boolean $immediate whether to long poll or return immediately
+	 * @param boolean $immediate (optional) whether to long poll or return immediately
 	 * @return array the comet status notifications
 	 */
-	public function getCometNotifications($class, $immediate = false)
+	public function getCometNotifications($class, $immediate = true)
 	{
 		$this->ensureValidBoxId($class);
 
