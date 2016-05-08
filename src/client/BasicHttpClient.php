@@ -63,7 +63,11 @@ class BasicHttpClient implements ClientInterface
 	{
 		$this->_hostname = $hostname;
 		$this->_port = $port;
+		
 		$this->_httpClient = new Client();
+		$this->_httpClient->setOptions([
+			'keepalive' => true,
+		]);
 	}
 
 	public function setCredentials($username, $password)
