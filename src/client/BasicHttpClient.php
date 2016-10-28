@@ -98,7 +98,7 @@ class BasicHttpClient implements ClientInterface
 		$response = $this->_httpClient->dispatch($httpRequest);
 
 		if ($response->getStatusCode() !== 200)
-			throw new exception\RequestFailedException();
+			throw new exception\RequestFailedException($response);
 
 		return new Response($response->getContent());
 	}

@@ -2,6 +2,8 @@
 
 namespace Jalle19\tvheadend\exception;
 
+use Zend\Http\Response;
+
 /**
  * Copyright (C) 2015 Sam Stenvall
  *
@@ -23,5 +25,30 @@ namespace Jalle19\tvheadend\exception;
  */
 class RequestFailedException extends BaseException
 {
+
+	/**
+	 * @var Response
+	 */
+	private $response;
+
+
+	/**
+	 * RequestFailedException constructor.
+	 *
+	 * @param Response $response
+	 */
+	public function __construct(Response $response)
+	{
+		$this->response = $response;
+	}
+
+
+	/**
+	 * @return Response
+	 */
+	public function getResponse()
+	{
+		return $this->response;
+	}
 	
 }
