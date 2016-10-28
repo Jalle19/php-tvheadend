@@ -70,6 +70,10 @@ class BasicHttpClient implements ClientInterface
 		]);
 	}
 
+
+	/**
+	 * @inheritdoc
+	 */
 	public function setCredentials($username, $password)
 	{
 		$this->_username = $username;
@@ -79,6 +83,10 @@ class BasicHttpClient implements ClientInterface
 		$this->_httpClient->setAuth($username, $password);
 	}
 
+
+	/**
+	 * @inheritdoc
+	 */
 	public function getResponse($request)
 	{
 		$httpRequest = $this->createBaseRequest($request->getPath());
