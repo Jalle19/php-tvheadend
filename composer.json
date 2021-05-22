@@ -9,9 +9,9 @@
         }
     ],
     "require": {
-        "zendframework/zend-http": "2.3.*",
         "nategood/commando": "0.2.*",
-        "monolog/monolog": "^1.12"
+        "monolog/monolog": "^1.12",
+        "laminas/laminas-http": "^2.14"
     },
     "autoload": {
         "psr-4": {
