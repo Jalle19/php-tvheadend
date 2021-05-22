@@ -2,7 +2,7 @@
 
 namespace Jalle19\tvheadend\exception;
 
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Copyright (C) 2015 Sam Stenvall

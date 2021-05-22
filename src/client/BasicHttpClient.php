@@ -3,7 +3,7 @@
 namespace Jalle19\tvheadend\client;
 
 use Jalle19\tvheadend\exception;
-use Zend\Http\Client;
+use Laminas\Http\Client;
 
 /**
  * Basic HTTP client for communicating with tvheadend
@@ -30,7 +30,7 @@ class BasicHttpClient implements ClientInterface
 {
 
 	/**
-	 * @var \Zend\Http\Client the HTTP client
+	 * @var \Laminas\Http\Client the HTTP client
 	 */
 	private $_httpClient;
 
@@ -94,7 +94,7 @@ class BasicHttpClient implements ClientInterface
 		foreach ($request->getParameters() as $name=> $value)
 			$httpRequest->getPost()->set($name, $value);
 
-		/* @var $response \Zend\Http\Response */
+		/* @var $response \Laminas\Http\Response */
 		$response = $this->_httpClient->dispatch($httpRequest);
 
 		if ($response->getStatusCode() !== 200)
@@ -106,14 +106,14 @@ class BasicHttpClient implements ClientInterface
 	/**
 	 * Creates a basic HTTP request
 	 * @param string $relativeUrl the relative API URL
-	 * @return \Zend\Http\Request
+	 * @return \Laminas\Http\Request
 	 */
 	protected function createBaseRequest($relativeUrl)
 	{
 		$baseUrl = $this->getBaseUrl(false);
-		$request = new \Zend\Http\Request();
+		$request = new \Laminas\Http\Request();
 		$request->setUri($baseUrl.$relativeUrl);
-		$request->setMethod(\Zend\Http\Request::METHOD_POST);
+		$request->setMethod(\Laminas\Http\Request::METHOD_POST);
 		$request->getHeaders()->addHeaders(array(
 			'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8',
 			'Accept-Encoding'=>'identity')); // plain text
@@ -138,7 +138,7 @@ class BasicHttpClient implements ClientInterface
 
 	/**
 	 * Adds default parameters to the request, such as sorting
-	 * @param \Zend\Http\Request $request the request
+	 * @param \Laminas\Http\Request $request the request
 	 */
 	protected function addDefaultParameters(&$request)
 	{
