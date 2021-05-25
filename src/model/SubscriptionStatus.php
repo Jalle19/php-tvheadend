@@ -26,9 +26,9 @@ use Jalle19\tvheadend\model\comet\SubscriptionNotification;
  * @author  Sam Stenvall <neggelandia@gmail.com>
  * @package Jalle19\tvheadend\model
  *
- * @property int    $id
- * @property int    $start
- * @property int    $errors
+ * @property int $id
+ * @property int $start
+ * @property int $errors
  * @property string $state
  * @property string $hostname
  * @property string $username
@@ -41,14 +41,15 @@ use Jalle19\tvheadend\model\comet\SubscriptionNotification;
 class SubscriptionStatus extends Node
 {
 
-	const STATE_IDLE    = 'idle';
+	const STATE_IDLE = 'idle';
 	const STATE_TESTING = 'testing';
 	const STATE_RUNNING = 'running';
-	const STATE_BAD     = 'bad';
+	const STATE_BAD = 'bad';
 
-	const TYPE_STREAMING      = 'streaming';
-	const TYPE_RECORDING      = 'dvr';
-	const TYPE_EPGGRAB        = 'epggrab';
+	const TYPE_STREAMING = 'streaming';
+	const TYPE_RECORDING = 'dvr';
+	const TYPE_EPGGRAB = 'epggrab';
+	const TYPE_SATIP = 'satip';
 	const TYPE_SERVICE_OR_MUX = 'service_or_mux';
 
 
@@ -61,7 +62,9 @@ class SubscriptionStatus extends Node
 			return self::TYPE_RECORDING;
 		else if (strpos($this->title, 'epggrab') !== false)
 			return self::TYPE_EPGGRAB;
-		else if (!$this->hasProperty('channel'))
+		else if ($this->title === 'SAT>IP') {
+			return self::TYPE_SATIP;
+		} else if (!$this->hasProperty('channel'))
 			return self::TYPE_SERVICE_OR_MUX;
 
 		return self::TYPE_STREAMING;
@@ -75,7 +78,7 @@ class SubscriptionStatus extends Node
 	 */
 	public function augment(SubscriptionNotification $notification)
 	{
-		$this->in  = $notification->in;
+		$this->in = $notification->in;
 		$this->out = $notification->out;
 	}
 
