@@ -6,7 +6,7 @@ use Jalle19\tvheadend\exception;
 
 /**
  * Factory for creating network objects from API responses
- * 
+ *
  * Copyright (C) 2015 Sam Stenvall
  *
  * This program is free software; you can redistribute it and/or
@@ -44,10 +44,15 @@ class Factory
 	 */
 	public static function factory($className)
 	{
-		switch ($className)
-		{
+		switch ($className) {
 			case Network::CLASS_IPTV:
 				return new IptvNetwork();
+			case Network::CLASS_IPTV_AUTO_NETWORK:
+				return new IptvAutoNetwork();
+			case Network::CLASS_DVBS_NETWORK:
+				return new DvbsNetwork();
+			case Network::CLASS_DVBC_NETWORK:
+				return new DvbcNetwork();
 			default:
 				throw new exception\NotImplementedException();
 		}
@@ -63,10 +68,15 @@ class Factory
 	 */
 	public static function fromRawEntry($className, $entry)
 	{
-		switch ($className)
-		{
+		switch ($className) {
 			case Network::CLASS_IPTV:
 				return IptvNetwork::fromRawEntry($entry);
+			case Network::CLASS_IPTV_AUTO_NETWORK:
+				return IptvAutoNetwork::fromRawEntry($entry);
+			case Network::CLASS_DVBS_NETWORK:
+				return DvbsNetwork::fromRawEntry($entry);
+			case Network::CLASS_DVBC_NETWORK:
+				return DvbcNetwork::fromRawEntry($entry);
 			default:
 				throw new exception\NotImplementedException();
 		}
