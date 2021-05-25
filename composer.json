@@ -9,6 +9,7 @@
         }
     ],
     "require": {
+        "ext-json": "*",
         "nategood/commando": "0.2.*",
         "monolog/monolog": "^1.12",
         "laminas/laminas-http": "^2.14"
