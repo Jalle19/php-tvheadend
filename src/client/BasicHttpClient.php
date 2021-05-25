@@ -65,6 +65,7 @@ class BasicHttpClient implements ClientInterface
 		$this->_port = $port;
 		
 		$this->_httpClient = new Client();
+		$this->_httpClient->setAdapter(Client\Adapter\Curl::class);
 		$this->_httpClient->setOptions([
 			'keepalive' => true,
 		]);
