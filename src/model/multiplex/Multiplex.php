@@ -6,7 +6,7 @@ use Jalle19\tvheadend\model\Node;
 
 /**
  * Base class for multiplexes
- * 
+ *
  * Copyright (C) 2015 Sam Stenvall
  *
  * This program is free software; you can redistribute it and/or
@@ -25,27 +25,34 @@ use Jalle19\tvheadend\model\Node;
  *
  * @author Sam Stenvall <neggelandia@gmail.com>
  * @property boolean $enabled
+ * @property string $name
  * @property int $epg
  * @property int $scan_state
  * @property string $charset
  * @property int $pmt_06_ac3
  */
-abstract class Multiplex extends Node
+class Multiplex extends Node
 {
 
 	const SCAN_STATE_IDLE = 0;
 	const SCAN_STATE_PENDING = 1;
 	const SCAN_STATE_ACTIVE = 2;
 
+	public function __construct($name = '')
+	{
+		$this->name = $name;
+	}
+
+
 	protected function getDefaultProperties()
 	{
 		return array(
-			'enabled'=>true,
-			'epg'=>1,
-			'scan_state'=>self::SCAN_STATE_IDLE,
-			'charset'=>'',
-			'pmt_06_ac3'=>0,
+			'enabled' => true,
+			'name' => 'New mux',
+			'epg' => 1,
+			'scan_state' => self::SCAN_STATE_IDLE,
+			'charset' => '',
+			'pmt_06_ac3' => 0,
 		);
 	}
-
 }

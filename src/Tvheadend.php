@@ -8,14 +8,16 @@ use Jalle19\tvheadend\model\comet\InputStatusNotification;
 use Jalle19\tvheadend\model\comet\LogMessageNotification;
 use Jalle19\tvheadend\model\comet\SubscriptionNotification;
 use Jalle19\tvheadend\model\ConnectionStatus;
+use Jalle19\tvheadend\model\Filter;
 use Jalle19\tvheadend\model\InputStatus;
 use Jalle19\tvheadend\model\IStreamable;
+use Jalle19\tvheadend\model\multiplex\Multiplex;
 use Jalle19\tvheadend\model\ServiceMapperRequest;
 
 /**
- * Main class for interacting with tvheadend. Each object represents an 
+ * Main class for interacting with tvheadend. Each object represents an
  * instance of tvheadend.
- * 
+ *
  * Copyright (C) 2015 Sam Stenvall
  *
  * This program is free software; you can redistribute it and/or
@@ -42,7 +44,7 @@ class Tvheadend
 	 */
 	const MAXIMUM_BOXID_AGE = 5;
 
-	const NOTIFICATION_CLASS_INPUT_STATUS  = 'input_status';
+	const NOTIFICATION_CLASS_INPUT_STATUS = 'input_status';
 	const NOTIFICATION_CLASS_SUBSCRIPTIONS = 'subscriptions';
 	const NOTIFICATION_CLASS_LOG_MESSAGE = 'logmessage';
 
@@ -62,8 +64,8 @@ class Tvheadend
 	private $_client;
 
 	/**
-	 * @var BoxId[] the list of which box IDs to use for which comet poll 
-	 * requests. Each key is a notification class and the value is the 
+	 * @var BoxId[] the list of which box IDs to use for which comet poll
+	 * requests. Each key is a notification class and the value is the
 	 * corresponding box ID.
 	 */
 	private $_boxIds = array();
@@ -97,7 +99,7 @@ class Tvheadend
 	{
 		$this->_client->setCredentials($username, $password);
 	}
-	
+
 	/**
 	 * Attempts to retrieve the root path on the server to test
 	 * the connection
@@ -137,8 +139,8 @@ class Tvheadend
 	public function getNodeData($uuid)
 	{
 		$request = new client\Request('/api/idnode/load', array(
-			'uuid'=>$uuid,
-			'meta'=>0));
+			'uuid' => $uuid,
+			'meta' => 0));
 
 		$response = $this->_client->getResponse($request);
 		$content = json_decode($response->getContent());
@@ -156,8 +158,8 @@ class Tvheadend
 	public function createNetwork($network)
 	{
 		$request = new client\Request('/api/mpegts/network/create', array(
-			'class'=>$network->getClassName(),
-			'conf'=>json_encode($network)));
+			'class' => $network->getClassName(),
+			'conf' => json_encode($network)));
 
 		$this->_client->getResponse($request);
 	}
@@ -190,16 +192,14 @@ class Tvheadend
 
 		$networks = array();
 
-		foreach ($content->entries as $entry)
-		{
+		foreach ($content->entries as $entry) {
 			// Retrieve the class for this network so we know what type it is
 			$nodeData = $this->getNodeData($entry->uuid);
 
 			// TODO: Remove once factory is finished
 			try {
 				$networks[] = model\network\Factory::fromRawEntry($nodeData->class, $entry);
-			}
-			catch (exception\NotImplementedException $e) {
+			} catch (exception\NotImplementedException $e) {
 				continue;
 			}
 		}
@@ -215,10 +215,35 @@ class Tvheadend
 	public function createMultiplex($network, $multiplex)
 	{
 		$request = new client\Request('/api/mpegts/network/mux_create', array(
-			'uuid'=>$network->uuid,
-			'conf'=>json_encode($multiplex)));
+			'uuid' => $network->uuid,
+			'conf' => json_encode($multiplex)));
 
 		$this->_client->getResponse($request);
+	}
+
+	/**
+	 * @param Filter|null $filter
+	 * @return array
+	 * @throws exception\RequestFailedException
+	 */
+	public function getMultiplexes(Filter $filter = null)
+	{
+		$request = new client\Request('/api/mpegts/mux/grid', ['limit' => 9999]);
+
+		if ($filter !== null) {
+			$request->setFilter($filter);
+		}
+
+		$response = $this->_client->getResponse($request);
+		$content = json_decode($response->getContent());
+
+		$muxes = [];
+
+		foreach ($content->entries as $entry) {
+			$muxes[] = Multiplex::fromRawEntry($entry);
+		}
+
+		return $muxes;
 	}
 
 	/**
@@ -232,10 +257,10 @@ class Tvheadend
 
 		// Create the request
 		$request = new client\Request('/api/channel/grid');
-		
+
 		if ($filter)
 			$request->setFilter($filter);
-		
+
 		// Get the response
 		$response = $this->_client->getResponse($request);
 		$rawContent = $response->getContent();
@@ -278,7 +303,7 @@ class Tvheadend
 	/**
 	 * Retrieves the EPG events for the specified channel
 	 * @param model\Channel $channel
-	 * @param int           $limit (optional) limit how many events are returned
+	 * @param int $limit (optional) limit how many events are returned
 	 *
 	 * @return model\Event[] the events
 	 */
@@ -299,8 +324,7 @@ class Tvheadend
 		$content = json_decode($rawContent);
 		$events = [];
 
-		if ($content->totalCount > 0)
-		{
+		if ($content->totalCount > 0) {
 			foreach ($content->entries as $entry)
 				$events[] = model\Event::fromRawEntry($entry);
 		}
@@ -316,7 +340,7 @@ class Tvheadend
 		$subscriptions = [];
 		$request = new client\Request('/api/status/subscriptions');
 
-		$response   = $this->_client->getResponse($request);
+		$response = $this->_client->getResponse($request);
 		$rawContent = $response->getContent();
 
 		$content = json_decode($rawContent);
@@ -327,8 +351,7 @@ class Tvheadend
 		else
 			$notifications = array();
 
-		foreach ($content->entries as $rawEntry)
-		{
+		foreach ($content->entries as $rawEntry) {
 			$subscription = model\SubscriptionStatus::fromRawEntry($rawEntry);
 
 			// See if there's a notification for this subscription
@@ -349,9 +372,9 @@ class Tvheadend
 	public function getConnectionStatus()
 	{
 		$connections = [];
-		$request     = new client\Request('/api/status/connections');
+		$request = new client\Request('/api/status/connections');
 
-		$response   = $this->_client->getResponse($request);
+		$response = $this->_client->getResponse($request);
 		$rawContent = $response->getContent();
 
 		$content = json_decode($rawContent);
@@ -368,10 +391,10 @@ class Tvheadend
 	 */
 	public function getInputStatus()
 	{
-		$inputs  = [];
+		$inputs = [];
 		$request = new client\Request('/api/status/inputs');
 
-		$response   = $this->_client->getResponse($request);
+		$response = $this->_client->getResponse($request);
 		$rawContent = $response->getContent();
 
 		$content = json_decode($rawContent);
@@ -408,20 +431,18 @@ class Tvheadend
 		));
 
 		$response = $this->_client->getResponse($request);
-		$content  = json_decode($response->getContent());
+		$content = json_decode($response->getContent());
 
 		// Parse the messages
 		$messages = array();
 
-		foreach ($content->messages as $message)
-		{
+		foreach ($content->messages as $message) {
 			$notificationClass = $message->notificationClass;
 
 			if ($notificationClass !== $class)
 				continue;
 
-			switch ($notificationClass)
-			{
+			switch ($notificationClass) {
 				case self::NOTIFICATION_CLASS_INPUT_STATUS:
 					$messages[] = InputStatusNotification::fromRawEntry($message);
 					break;
@@ -437,7 +458,7 @@ class Tvheadend
 		return $messages;
 	}
 
-	
+
 	/**
 	 * @param ServiceMapperRequest $serviceMapperRequest
 	 */
@@ -453,13 +474,13 @@ class Tvheadend
 
 	/**
 	 * @param IStreamable $streamable a streamable
-	 * @param string $profile (optional) which streaming profile to use. Defaults 
+	 * @param string $profile (optional) which streaming profile to use. Defaults
 	 * to null, meaning the server decides
 	 * @return string the absolute URL to the streamable
 	 */
 	public function getAbsoluteUrl(IStreamable $streamable, $profile = null)
 	{
-		return $this->_client->getBaseUrl().$streamable->getUrl($profile);
+		return $this->_client->getBaseUrl() . $streamable->getUrl($profile);
 	}
 
 	/**
@@ -471,7 +492,7 @@ class Tvheadend
 	}
 
 	/**
-	 * 
+	 *
 	 * @param \Jalle19\tvheadend\client\ClientInterface $client
 	 */
 	public function setClient(client\ClientInterface $client)
@@ -485,11 +506,11 @@ class Tvheadend
 	 */
 	private function generateCometPollBoxId()
 	{
-		$request  = new client\Request('/comet/poll');
+		$request = new client\Request('/comet/poll');
 		$response = $this->_client->getResponse($request);
 
 		$content = json_decode($response->getContent());
-		$boxId   = $content->boxid;
+		$boxId = $content->boxid;
 
 		return new BoxId($boxId);
 	}

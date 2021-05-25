@@ -6,7 +6,7 @@ use Jalle19\tvheadend\model\ClassNode;
 
 /**
  * Base class for networks
- * 
+ *
  * Copyright (C) 2015 Sam Stenvall
  *
  * This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@ use Jalle19\tvheadend\model\ClassNode;
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * @author Sam Stenvall <neggelandia@gmail.com>
- * @property string $networkname 
+ * @property string $networkname
  * @property boolean $autodiscovery
  * @property boolean $skipinitscan
  * @property boolean $sid_chnum
@@ -38,19 +38,31 @@ abstract class Network extends ClassNode
 {
 
 	const CLASS_IPTV = 'iptv_network';
+	const CLASS_IPTV_AUTO_NETWORK = 'iptv_auto_network';
+	const CLASS_DVBS_NETWORK = 'dvb_network_dvbs';
+	const CLASS_DVBC_NETWORK = 'dvb_network_dvbc';
+
+	/**
+	 * Network constructor.
+	 * @param string $name
+	 */
+	public function __construct($name = '')
+	{
+		$this->networkname = $name;
+	}
 
 	protected function getDefaultProperties()
 	{
 		return array(
-			'networkname'=>'',
-			'autodiscovery'=>true,
-			'skipinitscan'=>true,
-			'sid_chnum'=>false,
-			'ignore_chnum'=>false,
-			'nid'=>0,
-			'idlescan'=>false,
-			'charset'=>'',
-			'localtime'=>false);
+			'networkname' => '',
+			'autodiscovery' => true,
+			'skipinitscan' => true,
+			'sid_chnum' => false,
+			'ignore_chnum' => false,
+			'nid' => 0,
+			'idlescan' => false,
+			'charset' => '',
+			'localtime' => false);
 	}
 
 }
